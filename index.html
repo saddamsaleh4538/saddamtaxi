@@ -1,288 +1,1531 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التاكسي الذكي - التطبيق الشامل</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --dark-bg: #0a0a0a;
-            --card-bg: #1a1a1a;
-            --text-light: #ffffff;
-            --text-gray: #aaaaaa;
-        }
-
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--dark-bg );
-            color: var(--text-light);
-            margin: 0;
-            padding: 0;
-            background-image: radial-gradient(circle at top, #1f1a0d 0%, var(--dark-bg) 40%);
-            min-height: 100vh;
-        }
-
-        .container {
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-        }
-        .header h1 {
-            color: var(--gold);
-            font-size: 2.2em;
-            margin: 0;
-            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
-        }
-        .header p {
-            color: var(--gold-light);
-            margin: 5px 0;
-            font-size: 1em;
-        }
-        .back-btn {
-            position: absolute;
-            right: 0;
-            top: 10px;
-            background: transparent;
-            border: none;
-            color: var(--gold);
-            font-size: 1.5em;
-            cursor: pointer;
-            display: none;
-        }
-
-        /* Screens */
-        .screen { display: none; animation: fadeIn 0.3s ease; }
-        .screen.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Home Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .service-card {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 15px;
-            padding: 20px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .service-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-            transform: translateY(-3px);
-        }
-        .service-card span { display: block; font-size: 2.5em; margin-bottom: 10px; }
-        .service-card h3 { margin: 0; color: var(--gold-light); font-size: 1.1em; }
-
-        /* Forms */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; color: var(--text-gray); font-size: 0.9em; margin-bottom: 8px; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            background: var(--card-bg);
-            border: 1px solid #333;
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 1em;
-            box-sizing: border-box;
-            outline: none;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: var(--gold);
-        }
-        .form-group textarea { resize: vertical; min-height: 80px; }
-
-        /* Car Selection */
-        .car-selection { display: flex; gap: 10px; margin-bottom: 20px; }
-        .car-card {
-            flex: 1; background-color: var(--card-bg); border: 1px solid #333;
-            border-radius: 10px; padding: 15px 5px; text-align: center; cursor: pointer;
-        }
-        .car-card.active { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
-        .car-card h3 { margin: 0; font-size: 0.9em; color: var(--gold-light); }
-
-        /* Buttons */
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(45deg, #b8860b, #ffd700, #b8860b);
-            color: #000; border: none; padding: 15px; border-radius: 25px;
-            font-family: 'Tajawal', sans-serif; font-size: 1.2em; font-weight: bold;
-            cursor: pointer; margin-top: 10px;
-        }
-        .loc-btn {
-            background: transparent; border: 1px solid var(--gold); color: var(--gold);
-            padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Tajawal';
-            width: 100%; margin-bottom: 10px;
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>VIP Taxi</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;900&display=swap');
+ 
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --dark3: #222222;
+    --dark4: #2A2A2A;
+    --white: #F5F0E8;
+    --white-dim: rgba(245,240,232,0.7);
+    --white-faint: rgba(245,240,232,0.12);
+    --gold-glow: 0 0 20px rgba(201,168,76,0.35);
+    --gold-glow-strong: 0 0 35px rgba(201,168,76,0.6);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+ 
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+ 
+  html, body {
+    height: 100%;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    overflow: hidden;
+    user-select: none;
+  }
+ 
+  /* ========= SCREENS ========= */
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 20px;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+ 
+  /* ========= SCROLLBAR ========= */
+  .screen::-webkit-scrollbar { width: 3px; }
+  .screen::-webkit-scrollbar-track { background: transparent; }
+  .screen::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+ 
+  /* ========= HEADER ========= */
+  .header {
+    padding: 16px 20px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(180deg, #0F0F0F 0%, transparent 100%);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+  }
+  .header-logo {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    box-shadow: var(--gold-glow);
+    flex-shrink: 0;
+  }
+  .header-title { font-size: 17px; font-weight: 900; color: var(--gold-light); letter-spacing: 0.5px; }
+  .header-sub { font-size: 11px; color: var(--white-dim); margin-top: 1px; }
+  .back-btn {
+    margin-right: auto;
+    width: 34px; height: 34px;
+    background: var(--white-faint);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; color: var(--gold);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .back-btn:active { transform: scale(0.9); background: rgba(201,168,76,0.15); }
+ 
+  /* ========= GOLD DIVIDER ========= */
+  .gold-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 20px;
+    opacity: 0.4;
+  }
+ 
+  /* ========= HERO SECTION ========= */
+  .hero {
+    padding: 24px 20px 0;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .hero-title {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero-sub { font-size: 13px; color: var(--white-dim); line-height: 1.6; padding: 0 10px; }
+ 
+  /* ========= SERVICE GRID ========= */
+  .service-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px;
+  }
+  .service-card {
+    background: linear-gradient(145deg, var(--dark2), var(--dark3));
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius);
+    padding: 18px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .service-card:active::before { opacity: 1; }
+  .service-card:active { transform: scale(0.96); border-color: rgba(201,168,76,0.4); }
+  .service-card.featured {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #1C1600, #2A2000, #1A1500);
+    border-color: rgba(201,168,76,0.4);
+    box-shadow: var(--gold-glow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 18px;
+    text-align: right;
+  }
+  .service-card.featured:active { transform: scale(0.98); }
+  .service-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(201,168,76,0.4));
+  }
+  .service-card.featured .service-icon {
+    margin: 0;
+    font-size: 40px;
+    flex-shrink: 0;
+  }
+  .service-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .service-desc {
+    font-size: 10px;
+    color: var(--white-dim);
+    margin-top: 3px;
+  }
+  .service-card.featured .service-name { font-size: 16px; font-weight: 900; }
+  .service-card.featured .service-desc { font-size: 12px; margin-top: 5px; }
+ 
+  /* ========= FORM ========= */
+  .form-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .field-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .field-input {
+    width: 100%;
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius-sm);
+    padding: 13px 14px;
+    font-size: 14px;
+    color: var(--white);
+    font-family: 'Cairo', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field-input:focus {
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+  }
+  .field-input::placeholder { color: rgba(245,240,232,0.3); }
+  .field-input[readonly] { cursor: pointer; }
+ 
+  .location-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.05));
+    border: 1px dashed rgba(201,168,76,0.35);
+    border-radius: var(--radius-sm);
+    padding: 13px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .location-btn:active { background: rgba(201,168,76,0.18); }
+  .location-btn-icon { font-size: 20px; }
+  .location-btn-text { font-size: 13px; font-weight: 600; color: var(--gold-light); }
+  .location-btn-sub { font-size: 10px; color: var(--white-dim); margin-top: 1px; }
+ 
+  /* Car type selector */
+  .car-types {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .car-type {
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius-sm);
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .car-type.selected {
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.08));
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201,168,76,0.25);
+  }
+  .car-type:active { transform: scale(0.95); }
+  .car-type-icon { font-size: 22px; margin-bottom: 4px; display: block; }
+  .car-type-name { font-size: 11px; font-weight: 600; color: var(--white); }
+  .car-type-price { font-size: 10px; color: var(--gold); margin-top: 2px; }
+ 
+  /* ========= BUTTONS ========= */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #0A0800;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 900;
+    font-family: 'Cairo', sans-serif;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+    letter-spacing: 0.5px;
+  }
+  .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 10px rgba(201,168,76,0.2); }
+  .btn-primary:disabled { opacity: 0.5; pointer-events: none; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-secondary:active { background: rgba(201,168,76,0.08); }
+  .btn-group { display: flex; gap: 10px; padding: 0 20px 8px; }
+  .btn-group .btn-primary, .btn-group .btn-secondary { flex: 1; }
+ 
+  /* ========= RADAR SCREEN ========= */
+  .radar-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 24px;
+  }
+  .radar-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+  .radar-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.3);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: radarPulse 2.5s ease-in-out infinite;
+  }
+  .radar-circle:nth-child(1) { width: 60px; height: 60px; border-color: rgba(201,168,76,0.6); animation-delay: 0s; }
+  .radar-circle:nth-child(2) { width: 110px; height: 110px; animation-delay: 0.5s; }
+  .radar-circle:nth-child(3) { width: 160px; height: 160px; animation-delay: 1s; }
+  .radar-circle:nth-child(4) { width: 200px; height: 200px; animation-delay: 1.5s; }
+  @keyframes radarPulse {
+    0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.95); }
+    50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.03); }
+  }
+  .radar-sweep {
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    top: 0; left: 0;
+  }
+  .radar-sweep::after {
+    content: '';
+    position: absolute;
+    width: 50%; height: 50%;
+    right: 50%; bottom: 50%;
+    transform-origin: right bottom;
+    background: conic-gradient(from 0deg, transparent 0deg, rgba(201,168,76,0.4) 60deg, transparent 60deg);
+    animation: sweep 3s linear infinite;
+  }
+  @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .radar-center {
+    position: absolute;
+    width: 16px; height: 16px;
+    background: var(--gold);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: var(--gold-glow-strong);
+    z-index: 2;
+  }
+  .radar-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--gold-light);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--gold);
+    animation: dotBlink 1.5s ease-in-out infinite;
+  }
+  @keyframes dotBlink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+  .radar-status {
+    text-align: center;
+  }
+  .radar-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+  .radar-sub {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+  }
+  .radar-dots-loader {
+    display: flex; gap: 6px; justify-content: center; margin-top: 12px;
+  }
+  .radar-dots-loader span {
+    width: 7px; height: 7px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+  .radar-dots-loader span:nth-child(2) { animation-delay: 0.2s; }
+  .radar-dots-loader span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); opacity: 0.4; } 50% { transform: translateY(-6px); opacity: 1; } }
+  .radar-timer {
+    font-size: 12px;
+    color: var(--white-dim);
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 20px;
+    padding: 6px 16px;
+  }
+ 
+  /* ========= OFFER CARDS ========= */
+  .offers-list { padding: 12px 20px; display: flex; flex-direction: column; gap: 12px; }
+  .offer-card {
+    background: linear-gradient(145deg, var(--dark2), var(--dark3));
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .offer-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .offer-card:active::after { opacity: 1; }
+  .offer-card:active { transform: scale(0.98); border-color: rgba(201,168,76,0.4); }
+  .offer-card.best {
+    border-color: var(--gold);
+    box-shadow: var(--gold-glow);
+    background: linear-gradient(145deg, #1C1500, #251C00, #1A1400);
+  }
+  .offer-avatar {
+    width: 46px; height: 46px;
+    background: linear-gradient(135deg, var(--gold-dark), #5A4500);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  .offer-info { flex: 1; min-width: 0; }
+  .offer-name { font-size: 14px; font-weight: 700; color: var(--white); }
+  .offer-stars { font-size: 11px; color: var(--gold); margin-top: 2px; }
+  .offer-car { font-size: 11px; color: var(--white-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .offer-price {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--gold-light);
+    text-align: left;
+    flex-shrink: 0;
+  }
+  .offer-price span { display: block; font-size: 10px; font-weight: 400; color: var(--white-dim); text-align: center; margin-top: 1px; }
+  .best-badge {
+    position: absolute;
+    top: 0; right: 0;
+    background: var(--gold);
+    color: #0A0800;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 0 var(--radius) 0 var(--radius-sm);
+    letter-spacing: 0.5px;
+  }
+  .no-offers {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--white-dim);
+  }
+  .no-offers-icon { font-size: 48px; margin-bottom: 12px; display: block; opacity: 0.5; }
+ 
+  /* ========= TRIP ACTIVE ========= */
+  .trip-timeline {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 14px;
+    position: relative;
+  }
+  .timeline-item:not(:last-child) .timeline-dot::after {
+    content: '';
+    position: absolute;
+    top: 24px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 2px;
+    height: calc(100% + 0px);
+    background: linear-gradient(180deg, rgba(201,168,76,0.5), rgba(201,168,76,0.1));
+  }
+  .timeline-dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    position: relative;
+    margin-top: 3px;
+  }
+  .timeline-dot.done { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); box-shadow: var(--gold-glow); }
+  .timeline-dot.active { background: rgba(201,168,76,0.15); border: 2px solid var(--gold); animation: pulseDot 1.5s ease-in-out infinite; }
+  .timeline-dot.pending { background: var(--dark4); border: 1px solid rgba(201,168,76,0.2); }
+  @keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow: 0 0 0 6px rgba(201,168,76,0); } }
+  .timeline-content { flex: 1; padding-bottom: 24px; }
+  .timeline-label { font-size: 13px; font-weight: 700; color: var(--white); }
+  .timeline-label.active { color: var(--gold-light); }
+  .timeline-label.pending { color: var(--white-dim); }
+  .timeline-time { font-size: 11px; color: var(--white-dim); margin-top: 2px; }
+ 
+  .driver-card-trip {
+    margin: 0 20px;
+    background: linear-gradient(145deg, #1C1500, #251C00);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--gold-glow);
+  }
+  .driver-card-info { flex: 1; }
+  .driver-card-name { font-size: 16px; font-weight: 900; color: var(--gold-light); }
+  .driver-card-sub { font-size: 12px; color: var(--white-dim); margin-top: 3px; }
+  .driver-card-price { font-size: 22px; font-weight: 900; color: var(--gold); }
+  .driver-card-price small { font-size: 11px; color: var(--white-dim); display: block; text-align: center; }
+ 
+  .trip-actions { padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
+  .action-row { display: flex; gap: 10px; }
+  .action-btn {
+    flex: 1;
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius-sm);
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Cairo', sans-serif;
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .action-btn:active { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.4); }
+  .action-btn .action-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+ 
+  .trip-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 12px 20px;
+  }
+  .trip-status-badge.on-way { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); color: #93C5FD; }
+  .trip-status-badge.arrived { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #6EE7B7; }
+  .trip-status-badge.started { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: var(--gold-light); }
+  .pulse-dot { width: 7px; height: 7px; border-radius: 50%; animation: pulseDot2 1.2s ease-in-out infinite; }
+  .on-way .pulse-dot { background: #93C5FD; }
+  .arrived .pulse-dot { background: #6EE7B7; }
+  .started .pulse-dot { background: var(--gold); }
+  @keyframes pulseDot2 { 0%, 100% { opacity: 0.4; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+ 
+  /* ========= RATING SCREEN ========= */
+  .rating-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 24px;
+    text-align: center;
+    gap: 20px;
+  }
+  .rating-avatar {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    box-shadow: var(--gold-glow-strong);
+  }
+  .rating-title { font-size: 22px; font-weight: 900; color: var(--gold-light); }
+  .rating-sub { font-size: 14px; color: var(--white-dim); line-height: 1.6; }
+  .stars-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  .star-btn {
+    font-size: 38px;
+    cursor: pointer;
+    filter: grayscale(1) opacity(0.4);
+    transition: all 0.2s;
+    line-height: 1;
+    padding: 4px;
+  }
+  .star-btn.lit {
+    filter: grayscale(0) opacity(1) drop-shadow(0 0 8px rgba(201,168,76,0.6));
+    transform: scale(1.15);
+  }
+  .star-btn:active { transform: scale(0.9); }
+  .rating-note-input {
+    width: 100%;
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius-sm);
+    padding: 13px 14px;
+    font-size: 13px;
+    color: var(--white);
+    font-family: 'Cairo', sans-serif;
+    outline: none;
+    resize: none;
+    height: 80px;
+  }
+  .rating-note-input:focus { border-color: rgba(201,168,76,0.45); }
+ 
+  /* ========= TOAST ========= */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(135deg, var(--dark3), var(--dark4));
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+ 
+  /* ========= LOADER ========= */
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .loading-overlay.show { opacity: 1; pointer-events: all; }
+  .loader-ring {
+    width: 50px; height: 50px;
+    border: 3px solid rgba(201,168,76,0.15);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text { font-size: 14px; color: var(--gold-light); font-weight: 600; }
+ 
+  /* ========= INFO ROW ========= */
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white-faint);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--white-dim);
+  }
+  .info-row-icon { font-size: 16px; flex-shrink: 0; }
+  .info-row strong { color: var(--gold-light); font-size: 13px; }
+ 
+  .section-title {
+    padding: 16px 20px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <button class="back-btn" id="backBtn" onclick="goHome()">❮</button>
-            <h1>التاكسي الذكي</h1>
-            <p id="headerDesc">اختر الخدمة التي تناسبك</p>
-        </div>
-
-        <!-- الشاشة الرئيسية: اختيار الخدمة -->
-        <div id="homeScreen" class="screen active">
-            <div class="services-grid">
-                <div class="service-card" onclick="openService('trip_urgent', 'مشوار فوري')">
-                    <span>🚕</span><h3>مشوار فوري</h3>
-                </div>
-                <div class="service-card" onclick="openService('trip_monthly', 'التزام شهري/أسبوعي')">
-                    <span>📅</span><h3>التزام شهري</h3>
-                </div>
-                <div class="service-card" onclick="openService('srv_food', 'توصيل طلبات')">
-                    <span>🍔</span><h3>توصيل طلبات</h3>
-                </div>
-                <div class="service-card" onclick="openService('srv_general', 'خدمات عامة')">
-                    <span>🛠️</span><h3>خدمات عامة</h3>
-                </div>
-            </div>
-        </div>
-
-        <!-- شاشة تعبئة الطلب الشاملة -->
-        <div id="formScreen" class="screen">
-            <form id="mainForm">
-                <input type="hidden" id="selectedServiceType">
-                
-                <button type="button" class="loc-btn" id="getLocationBtn" onclick="getLocation()">📍 تحديد موقعي الحالي تلقائياً</button>
-
-                <div class="form-group">
-                    <label>موقع الانطلاق / الاستلام:</label>
-                    <input type="text" id="fromLocation" placeholder="اكتب الحي أو المعلم" required>
-                    <input type="hidden" id="fromLat">
-                    <input type="hidden" id="fromLon">
-                </div>
-
-                <div class="form-group" id="toLocationGroup">
-                    <label>الوجهة:</label>
-                    <input type="text" id="toLocation" placeholder="إلى أين؟">
-                </div>
-
-                <!-- قسم خاص بالمشاوير فقط -->
-                <div id="carsGroup" class="car-selection">
-                    <div class="car-card" onclick="selectCar('Standard', this)"><h3>Standard</h3></div>
-                    <div class="car-card active" onclick="selectCar('VIP', this)"><h3>👑 VIP</h3></div>
-                    <div class="car-card" onclick="selectCar('Van', this)"><h3>Van</h3></div>
-                </div>
-                <input type="hidden" id="carType" value="VIP">
-
-                <div class="form-group">
-                    <label>تفاصيل إضافية (اختياري):</label>
-                    <textarea id="details" placeholder="مثال: عدد الركاب، تفاصيل الطلب، وقت محدد..."></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn">❯ تأكيد وإرسال الطلب</button>
-            </form>
-        </div>
+ 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SCREEN 1: HOME                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-home">
+  <div class="header">
+    <div class="header-logo">🚕</div>
+    <div>
+      <div class="header-title">VIP TAXI</div>
+      <div class="header-sub">خدمة ذهبية على مدار الساعة</div>
     </div>
-
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-
-        // التنقل بين الشاشات
-        function openService(serviceType, title) {
-            document.getElementById('homeScreen').classList.remove('active');
-            document.getElementById('formScreen').classList.add('active');
-            document.getElementById('backBtn').style.display = 'block';
-            document.getElementById('headerDesc').textContent = title;
-            document.getElementById('selectedServiceType').value = serviceType;
-
-            // إخفاء/إظهار السيارات والوجهة حسب نوع الخدمة
-            if(serviceType.startsWith('trip_')) {
-                document.getElementById('carsGroup').style.display = 'flex';
-                document.getElementById('toLocationGroup').style.display = 'block';
-                document.getElementById('toLocation').required = true;
-            } else {
-                document.getElementById('carsGroup').style.display = 'none';
-                document.getElementById('toLocationGroup').style.display = 'none';
-                document.getElementById('toLocation').required = false;
-            }
-        }
-
-        function goHome() {
-            document.getElementById('formScreen').classList.remove('active');
-            document.getElementById('homeScreen').classList.add('active');
-            document.getElementById('backBtn').style.display = 'none';
-            document.getElementById('headerDesc').textContent = 'اختر الخدمة التي تناسبك';
-            document.getElementById('mainForm').reset();
-        }
-
-        // اختيار السيارة
-        function selectCar(type, element) {
-            document.getElementById('carType').value = type;
-            document.querySelectorAll('.car-card').forEach(card => card.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        // تحديد الموقع
-        function getLocation() {
-            const btn = document.getElementById('getLocationBtn');
-            btn.textContent = '⏳ جاري التحديد...';
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    document.getElementById('fromLat').value = position.coords.latitude;
-                    document.getElementById('fromLon').value = position.coords.longitude;
-                    document.getElementById('fromLocation').value = `موقعي الحالي (${position.coords.latitude.toFixed(4)}, ${position.coords.longitude.toFixed(4)})`;
-                    btn.textContent = '✅ تم التحديد بنجاح';
-                }, function(error) {
-                    btn.textContent = '📍 تحديد موقعي الحالي تلقائياً';
-                    tg.showPopup({title: 'خطأ', message: 'تعذر الحصول على موقعك. يرجى كتابته يدوياً.'});
-                });
-            }
-        }
-
-        // إرسال الطلب
-        document.getElementById('mainForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const serviceType = document.getElementById('selectedServiceType').value;
-            let finalDetails = document.getElementById('details').value;
-            
-            if(serviceType.startsWith('trip_')) {
-                finalDetails = `نوع السيارة: ${document.getElementById('carType').value}\n` + finalDetails;
-            }
-
-            const data = {
-                action: 'request_trip',
-                trip_type: serviceType,
-                from_location_text: document.getElementById('fromLocation').value,
-                from_latitude: document.getElementById('fromLat').value || null,
-                from_longitude: document.getElementById('fromLon').value || null,
-                to_location_text: document.getElementById('toLocation').value || 'غير محدد',
-                details: finalDetails
-            };
-
-            tg.showPopup({
-                title: 'تأكيد الطلب',
-                message: 'سيتم إرسال طلبك الآن للسائقين المتاحين.',
-                buttons: [{type: 'ok'}]
-            }, function() {
-                tg.sendData(JSON.stringify(data));
-                tg.close();
-            });
+  </div>
+  <div class="gold-line"></div>
+ 
+  <div class="hero">
+    <div class="hero-badge">✦ نخبة السائقين المعتمدين ✦</div>
+    <div class="hero-title">وجهتك،<br>بلمسة واحدة</div>
+    <div class="hero-sub">سائقون محترفون، أسعار شفافة،<br>وصول سريع في أي وقت</div>
+  </div>
+ 
+  <div class="service-grid">
+    <div class="service-card featured" onclick="goToRequest('مشوار يومي')">
+      <span class="service-icon">🚕</span>
+      <div>
+        <div class="service-name">اطلب مشوار الآن</div>
+        <div class="service-desc">توصيل فوري لأي وجهة في المدينة</div>
+      </div>
+    </div>
+    <div class="service-card" onclick="goToRequest('التزام شهري')">
+      <span class="service-icon">📅</span>
+      <div class="service-name">التزام شهري</div>
+      <div class="service-desc">سائق ثابت يومياً</div>
+    </div>
+    <div class="service-card" onclick="goToRequest('رحلة أسبوعية')">
+      <span class="service-icon">🔁</span>
+      <div class="service-name">رحلة أسبوعية</div>
+      <div class="service-desc">اشتراك مرن ومريح</div>
+    </div>
+    <div class="service-card" onclick="goToRequest('طلب طعام')">
+      <span class="service-icon">🍽️</span>
+      <div class="service-name">طلب طعام</div>
+      <div class="service-desc">توصيل من مطعمك</div>
+    </div>
+    <div class="service-card" onclick="goToRequest('صيدلية')">
+      <span class="service-icon">💊</span>
+      <div class="service-name">صيدلية</div>
+      <div class="service-desc">دواء يصل لبابك</div>
+    </div>
+  </div>
+</div>
+ 
+ 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SCREEN 2: REQUEST TRIP                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-request">
+  <div class="header">
+    <div class="header-logo">📍</div>
+    <div>
+      <div class="header-title" id="request-title">تفاصيل الرحلة</div>
+      <div class="header-sub">حدد نقاط رحلتك</div>
+    </div>
+    <div class="back-btn" onclick="showScreen('home')">→</div>
+  </div>
+  <div class="gold-line"></div>
+ 
+  <div class="form-body">
+    <div>
+      <div class="field-label">📍 موقع الانطلاق</div>
+      <div class="location-btn" id="btn-from-loc" onclick="getMyLocation('from')">
+        <span class="location-btn-icon">🎯</span>
+        <div>
+          <div class="location-btn-text">تحديد موقعي الحالي</div>
+          <div class="location-btn-sub" id="from-loc-text">اضغط للتحديد التلقائي</div>
+        </div>
+      </div>
+      <input class="field-input" id="from-manual" type="text" placeholder="أو اكتب الحي / المعلم يدوياً" style="margin-top:8px;" oninput="validateForm()"/>
+    </div>
+ 
+    <div>
+      <div class="field-label">🏁 الوجهة</div>
+      <input class="field-input" id="to-location" type="text" placeholder="مثال: حي الروضة، مستشفى الملك فهد..." oninput="validateForm()"/>
+    </div>
+ 
+    <div>
+      <div class="field-label">🚗 نوع السيارة</div>
+      <div class="car-types">
+        <div class="car-type selected" id="car-economy" onclick="selectCar('economy', this)">
+          <span class="car-type-icon">🚗</span>
+          <div class="car-type-name">عادي</div>
+          <div class="car-type-price">اقتصادي</div>
+        </div>
+        <div class="car-type" id="car-vip" onclick="selectCar('vip', this)">
+          <span class="car-type-icon">🚙</span>
+          <div class="car-type-name">VIP</div>
+          <div class="car-type-price">مميز</div>
+        </div>
+        <div class="car-type" id="car-van" onclick="selectCar('van', this)">
+          <span class="car-type-icon">🚐</span>
+          <div class="car-type-name">ڤان</div>
+          <div class="car-type-price">للعائلة</div>
+        </div>
+      </div>
+    </div>
+ 
+    <div id="extra-fields-wrap" style="display:none; flex-direction:column; gap:14px;">
+      <div>
+        <div class="field-label">⏰ وقت الانطلاق</div>
+        <input class="field-input" id="trip-time" type="text" placeholder="مثال: الآن، أو 5:00 م"/>
+      </div>
+      <div>
+        <div class="field-label">👥 عدد الأشخاص</div>
+        <input class="field-input" id="passengers-count" type="number" min="1" max="8" value="1"/>
+      </div>
+      <div>
+        <div class="field-label">📝 ملاحظات إضافية (اختياري)</div>
+        <input class="field-input" id="trip-notes" type="text" placeholder="أي تفاصيل تساعد السائق..."/>
+      </div>
+    </div>
+ 
+    <div class="info-row" style="cursor:pointer;" onclick="toggleExtra()">
+      <span class="info-row-icon" id="extra-toggle-icon">⊕</span>
+      <span id="extra-toggle-text">إضافة تفاصيل (الوقت، عدد الأشخاص...)</span>
+    </div>
+  </div>
+ 
+  <div class="btn-group">
+    <button class="btn-secondary" onclick="showScreen('home')">إلغاء</button>
+    <button class="btn-primary" id="btn-confirm-trip" onclick="confirmTrip()" disabled>تأكيد الطلب ✓</button>
+  </div>
+</div>
+ 
+ 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SCREEN 3: RADAR / WAITING                              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-radar">
+  <div class="header">
+    <div class="header-logo">🔍</div>
+    <div>
+      <div class="header-title">جاري البحث</div>
+      <div class="header-sub">نبحث عن أفضل سائق قريب</div>
+    </div>
+  </div>
+  <div class="gold-line"></div>
+ 
+  <div class="radar-container">
+    <div class="radar-wrap">
+      <div class="radar-circle"></div>
+      <div class="radar-circle"></div>
+      <div class="radar-circle"></div>
+      <div class="radar-circle"></div>
+      <div class="radar-sweep"></div>
+      <div class="radar-center"></div>
+      <!-- Dynamic dots will be injected here -->
+      <div class="radar-dot" style="top:30%;left:65%;animation-delay:0.3s;"></div>
+      <div class="radar-dot" style="top:60%;left:25%;animation-delay:1.1s;"></div>
+      <div class="radar-dot" style="top:20%;left:35%;animation-delay:0.7s;"></div>
+    </div>
+ 
+    <div class="radar-status">
+      <div class="radar-title">جاري البحث عن كباتن...</div>
+      <div class="radar-sub">
+        يتم الآن إرسال طلبك للسائقين<br>
+        القريبين منك في منطقتك
+      </div>
+      <div class="radar-dots-loader" style="margin-top:14px;">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+ 
+    <div class="radar-timer" id="radar-timer">⏱️ وقت البحث: <span id="timer-count">0</span> ثانية</div>
+ 
+    <div style="width:100%; display:flex; flex-direction:column; gap:10px;">
+      <div class="info-row">
+        <span class="info-row-icon">📍</span>
+        <div>من: <strong id="radar-from">—</strong></div>
+      </div>
+      <div class="info-row">
+        <span class="info-row-icon">🏁</span>
+        <div>إلى: <strong id="radar-to">—</strong></div>
+      </div>
+    </div>
+ 
+    <button class="btn-secondary" onclick="cancelSearch()" style="width:100%;">إلغاء البحث</button>
+  </div>
+</div>
+ 
+ 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SCREEN 4: OFFERS                                       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-offers">
+  <div class="header">
+    <div class="header-logo">💰</div>
+    <div>
+      <div class="header-title">عروض الكباتن</div>
+      <div class="header-sub" id="offers-count-text">اختر العرض المناسب</div>
+    </div>
+  </div>
+  <div class="gold-line"></div>
+ 
+  <div class="section-title">العروض المتاحة</div>
+  <div class="offers-list" id="offers-list">
+    <!-- Offers injected here -->
+  </div>
+ 
+  <div style="padding:0 20px 8px;">
+    <button class="btn-secondary" onclick="showScreen('radar'); startPolling()">🔄 انتظر عروض أخرى</button>
+  </div>
+</div>
+ 
+ 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SCREEN 5: ACTIVE TRIP                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-trip">
+  <div class="header">
+    <div class="header-logo">🚗</div>
+    <div>
+      <div class="header-title">رحلتك النشطة</div>
+      <div class="header-sub">الرحلة جارية الآن</div>
+    </div>
+  </div>
+  <div class="gold-line"></div>
+ 
+  <div class="trip-status-badge on-way" id="trip-status-badge">
+    <div class="pulse-dot"></div>
+    <span id="trip-status-text">السائق في الطريق إليك</span>
+  </div>
+ 
+  <div class="driver-card-trip">
+    <div class="offer-avatar">🧑‍✈️</div>
+    <div class="driver-card-info">
+      <div class="driver-card-name" id="active-driver-name">الكابتن أحمد</div>
+      <div class="driver-card-sub" id="active-driver-car">تويوتا كامري • ABC 1234</div>
+      <div style="font-size:11px; color:var(--gold); margin-top:3px;" id="active-driver-stars">⭐⭐⭐⭐⭐ 4.9</div>
+    </div>
+    <div>
+      <div class="driver-card-price" id="active-trip-price">—</div>
+      <small style="font-size:10px; color:var(--white-dim); display:block; text-align:center; margin-top:3px;">ريال</small>
+    </div>
+  </div>
+ 
+  <div class="section-title" style="margin-top:8px;">مراحل الرحلة</div>
+  <div class="trip-timeline">
+    <div class="timeline-item" id="step-onway">
+      <div class="timeline-dot active">🚗</div>
+      <div class="timeline-content">
+        <div class="timeline-label active">السائق في الطريق</div>
+        <div class="timeline-time" id="step-onway-time">الآن</div>
+      </div>
+    </div>
+    <div class="timeline-item" id="step-arrived">
+      <div class="timeline-dot pending">📍</div>
+      <div class="timeline-content">
+        <div class="timeline-label pending">السائق وصل لموقعك</div>
+        <div class="timeline-time">بانتظار التأكيد</div>
+      </div>
+    </div>
+    <div class="timeline-item" id="step-started">
+      <div class="timeline-dot pending">🏁</div>
+      <div class="timeline-content">
+        <div class="timeline-label pending">الرحلة بدأت</div>
+        <div class="timeline-time">متوقع</div>
+      </div>
+    </div>
+    <div class="timeline-item" id="step-done">
+      <div class="timeline-dot pending">✅</div>
+      <div class="timeline-content">
+        <div class="timeline-label pending">اكتملت الرحلة</div>
+        <div class="timeline-time">قريباً</div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="trip-actions">
+    <div class="action-row">
+      <div class="action-btn" onclick="showToast('جاري الاتصال بالسائق...')">
+        <span class="action-icon">📞</span>
+        اتصال
+      </div>
+      <div class="action-btn" onclick="showToast('تم إرسال الموقع للسائق')">
+        <span class="action-icon">📍</span>
+        موقعي
+      </div>
+      <div class="action-btn" onclick="showToast('جاري فتح شكوى...')">
+        <span class="action-icon">⚠️</span>
+        شكوى
+      </div>
+    </div>
+  </div>
+  <div style="padding: 12px 20px 0;">
+    <!-- Demo: advance trip status -->
+    <button class="btn-secondary" onclick="advanceTripStatus()" id="btn-advance-status">محاكاة: تقدم الرحلة ←</button>
+  </div>
+</div>
+ 
+ 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SCREEN 6: RATING                                       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-rating">
+  <div class="header">
+    <div class="header-logo">⭐</div>
+    <div>
+      <div class="header-title">تقييم الكابتن</div>
+      <div class="header-sub">رأيك يهمنا ويطور الخدمة</div>
+    </div>
+  </div>
+  <div class="gold-line"></div>
+ 
+  <div class="rating-body">
+    <div class="rating-avatar">🧑‍✈️</div>
+    <div>
+      <div class="rating-title" id="rating-driver-name">الكابتن أحمد</div>
+      <div style="font-size:13px; color:var(--gold); margin-top:4px;" id="rating-trip-details">الرحلة اكتملت بنجاح</div>
+    </div>
+    <div class="rating-sub">كيف كانت تجربتك مع هذا الكابتن؟</div>
+ 
+    <div class="stars-row" id="stars-row">
+      <span class="star-btn" onclick="rateStar(1)">⭐</span>
+      <span class="star-btn" onclick="rateStar(2)">⭐</span>
+      <span class="star-btn" onclick="rateStar(3)">⭐</span>
+      <span class="star-btn" onclick="rateStar(4)">⭐</span>
+      <span class="star-btn" onclick="rateStar(5)">⭐</span>
+    </div>
+ 
+    <textarea class="rating-note-input" id="rating-note" placeholder="أضف تعليقاً (اختياري)... كيف كان الكابتن؟"></textarea>
+ 
+    <button class="btn-primary" id="btn-submit-rating" onclick="submitRating()" disabled style="width:100%;">إرسال التقييم ✓</button>
+    <button class="btn-secondary" onclick="skipRating()" style="width:100%;">تخطي التقييم</button>
+  </div>
+</div>
+ 
+ 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  GLOBAL UI                                              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loader-ring"></div>
+  <div class="loader-text" id="loading-text">جاري المعالجة...</div>
+</div>
+ 
+ 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  JAVASCRIPT                                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<script>
+// ─── Config ───────────────────────────────────────────────
+const API_BASE = window.location.origin; // نفس السيرفر
+const POLL_INTERVAL = 3000; // 3 ثوانٍ
+ 
+// ─── State ────────────────────────────────────────────────
+const state = {
+  tg: window.Telegram?.WebApp || null,
+  userId: null,
+  currentTrip: {
+    id: null,
+    from: null,
+    fromLat: null,
+    fromLng: null,
+    to: null,
+    carType: 'economy',
+    time: null,
+    passengers: 1,
+    notes: null,
+    serviceType: 'مشوار يومي'
+  },
+  activeTrip: {
+    id: null,
+    driverId: null,
+    driverName: null,
+    price: null,
+    status: 'on_way' // on_way → arrived → started → completed
+  },
+  selectedRating: 0,
+  pollTimer: null,
+  searchTimer: null,
+  searchSeconds: 0,
+  extraVisible: false
+};
+ 
+// ─── Telegram Init ────────────────────────────────────────
+(function initTelegram() {
+  if (state.tg) {
+    state.tg.ready();
+    state.tg.expand();
+    state.tg.enableClosingConfirmation();
+    state.userId = state.tg.initDataUnsafe?.user?.id || null;
+    // Apply TG color scheme
+    const tgBg = state.tg.backgroundColor;
+    if (tgBg && tgBg !== '#ffffff') {
+      document.documentElement.style.setProperty('--black', tgBg);
+    }
+  }
+})();
+ 
+// ─── Screen Navigation ────────────────────────────────────
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('screen-' + name);
+  if (target) {
+    target.classList.add('active');
+    target.scrollTop = 0;
+  }
+}
+ 
+function goToRequest(serviceType) {
+  state.currentTrip.serviceType = serviceType;
+  document.getElementById('request-title').textContent = serviceType;
+  // Reset form
+  document.getElementById('from-loc-text').textContent = 'اضغط للتحديد التلقائي';
+  document.getElementById('from-manual').value = '';
+  document.getElementById('to-location').value = '';
+  state.currentTrip.fromLat = null;
+  state.currentTrip.fromLng = null;
+  document.getElementById('btn-confirm-trip').disabled = true;
+  showScreen('request');
+}
+ 
+// ─── Location ─────────────────────────────────────────────
+function getMyLocation(field) {
+  if (!navigator.geolocation) {
+    showToast('الموقع الجغرافي غير مدعوم');
+    return;
+  }
+  const btn = document.getElementById('btn-from-loc');
+  const sub = document.getElementById('from-loc-text');
+  sub.textContent = 'جاري تحديد الموقع...';
+  btn.style.borderColor = 'rgba(201,168,76,0.6)';
+ 
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      state.currentTrip.fromLat = pos.coords.latitude;
+      state.currentTrip.fromLng = pos.coords.longitude;
+      // Reverse geocode via nominatim (no key needed)
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json&accept-language=ar`)
+        .then(r => r.json())
+        .then(d => {
+          const addr = d.address;
+          const label = addr.neighbourhood || addr.suburb || addr.district || addr.city || 'موقعي الحالي';
+          sub.textContent = '✓ ' + label;
+          state.currentTrip.from = label;
+          btn.style.borderColor = 'rgba(201,168,76,0.5)';
+          validateForm();
+        })
+        .catch(() => {
+          sub.textContent = `✓ ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+          state.currentTrip.from = `${pos.coords.latitude},${pos.coords.longitude}`;
+          validateForm();
         });
-    </script>
+    },
+    err => {
+      sub.textContent = 'تعذر التحديد، أدخل يدوياً';
+      btn.style.borderColor = 'rgba(255,100,100,0.4)';
+      showToast('⚠️ فعّل إذن الموقع في الإعدادات');
+    },
+    { enableHighAccuracy: true, timeout: 8000 }
+  );
+}
+ 
+function selectCar(type, el) {
+  document.querySelectorAll('.car-type').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.currentTrip.carType = type;
+}
+ 
+function toggleExtra() {
+  state.extraVisible = !state.extraVisible;
+  const wrap = document.getElementById('extra-fields-wrap');
+  const icon = document.getElementById('extra-toggle-icon');
+  const txt = document.getElementById('extra-toggle-text');
+  if (state.extraVisible) {
+    wrap.style.display = 'flex';
+    icon.textContent = '⊖';
+    txt.textContent = 'إخفاء التفاصيل الإضافية';
+  } else {
+    wrap.style.display = 'none';
+    icon.textContent = '⊕';
+    txt.textContent = 'إضافة تفاصيل (الوقت، عدد الأشخاص...)';
+  }
+}
+ 
+function validateForm() {
+  const fromGPS = state.currentTrip.fromLat;
+  const fromManual = document.getElementById('from-manual').value.trim();
+  const toVal = document.getElementById('to-location').value.trim();
+  const valid = (fromGPS || fromManual.length > 2) && toVal.length > 2;
+  document.getElementById('btn-confirm-trip').disabled = !valid;
+  if (fromManual) state.currentTrip.from = fromManual;
+}
+ 
+// ─── Confirm Trip → API ───────────────────────────────────
+async function confirmTrip() {
+  const fromManual = document.getElementById('from-manual').value.trim();
+  const toVal = document.getElementById('to-location').value.trim();
+  const timeVal = document.getElementById('trip-time').value.trim();
+  const passVal = document.getElementById('passengers-count').value;
+  const notesVal = document.getElementById('trip-notes').value.trim();
+ 
+  state.currentTrip.from = fromManual || state.currentTrip.from;
+  state.currentTrip.to = toVal;
+  state.currentTrip.time = timeVal || 'الآن';
+  state.currentTrip.passengers = parseInt(passVal) || 1;
+  state.currentTrip.notes = notesVal;
+ 
+  showLoader('جاري إرسال طلبك...');
+ 
+  try {
+    const payload = {
+      user_id: state.userId,
+      trip_type: mapServiceType(state.currentTrip.serviceType),
+      from_location_text: state.currentTrip.from,
+      from_latitude: state.currentTrip.fromLat,
+      from_longitude: state.currentTrip.fromLng,
+      to_location_text: state.currentTrip.to,
+      car_type: state.currentTrip.carType,
+      trip_time: state.currentTrip.time,
+      passengers_count: state.currentTrip.passengers,
+      details: state.currentTrip.notes
+    };
+ 
+    const resp = await fetch(`${API_BASE}/api/request_trip`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await resp.json();
+    hideLoader();
+ 
+    if (data.success) {
+      state.currentTrip.id = data.trip_id;
+      // Update radar labels
+      document.getElementById('radar-from').textContent = state.currentTrip.from || '—';
+      document.getElementById('radar-to').textContent = state.currentTrip.to || '—';
+      showScreen('radar');
+      startPolling();
+      startSearchTimer();
+    } else {
+      showToast('❌ ' + (data.error || 'حدث خطأ، حاول مرة أخرى'));
+    }
+  } catch (e) {
+    hideLoader();
+    // DEMO MODE: work without backend
+    console.warn('Backend not reachable, demo mode:', e);
+    state.currentTrip.id = 9999;
+    document.getElementById('radar-from').textContent = state.currentTrip.from || '—';
+    document.getElementById('radar-to').textContent = state.currentTrip.to || '—';
+    showScreen('radar');
+    demoStartPolling();
+    startSearchTimer();
+  }
+}
+ 
+function mapServiceType(s) {
+  const m = {
+    'مشوار يومي': 'trip_urgent',
+    'التزام شهري': 'trip_monthly',
+    'رحلة أسبوعية': 'trip_weekly',
+    'طلب طعام': 'srv_food',
+    'صيدلية': 'srv_pharmacy'
+  };
+  return m[s] || 'trip_urgent';
+}
+ 
+// ─── Polling ──────────────────────────────────────────────
+function startPolling() {
+  stopPolling();
+  pollOffers();
+  state.pollTimer = setInterval(pollOffers, POLL_INTERVAL);
+}
+ 
+async function pollOffers() {
+  if (!state.currentTrip.id) return;
+  try {
+    const resp = await fetch(`${API_BASE}/api/check_offers/${state.currentTrip.id}`);
+    const data = await resp.json();
+    if (data.offers && data.offers.length > 0) {
+      stopPolling();
+      stopSearchTimer();
+      renderOffers(data.offers);
+      showScreen('offers');
+    }
+  } catch (e) {
+    console.warn('Poll error (demo mode):', e);
+  }
+}
+ 
+function stopPolling() {
+  if (state.pollTimer) { clearInterval(state.pollTimer); state.pollTimer = null; }
+}
+ 
+// DEMO: simulate offers after 6 seconds
+function demoStartPolling() {
+  setTimeout(() => {
+    stopSearchTimer();
+    const fakeOffers = [
+      { driver_id: 1, driver_name: 'الكابتن أحمد محمد', rating: 4.9, car: 'تويوتا كامري 2022', price: 45, trips: 312 },
+      { driver_id: 2, driver_name: 'الكابتن سعد العتيبي', rating: 4.7, car: 'هيونداي سوناتا 2021', price: 50, trips: 187 },
+      { driver_id: 3, driver_name: 'الكابتن خالد الزهراني', rating: 4.6, car: 'كيا أوبتيما 2020', price: 40, trips: 95 }
+    ];
+    renderOffers(fakeOffers);
+    showScreen('offers');
+  }, 6000);
+}
+ 
+// ─── Timer ────────────────────────────────────────────────
+function startSearchTimer() {
+  state.searchSeconds = 0;
+  stopSearchTimer();
+  state.searchTimer = setInterval(() => {
+    state.searchSeconds++;
+    const el = document.getElementById('timer-count');
+    if (el) el.textContent = state.searchSeconds;
+  }, 1000);
+}
+function stopSearchTimer() {
+  if (state.searchTimer) { clearInterval(state.searchTimer); state.searchTimer = null; }
+}
+ 
+function cancelSearch() {
+  stopPolling();
+  stopSearchTimer();
+  showToast('تم إلغاء البحث');
+  showScreen('home');
+}
+ 
+// ─── Render Offers ────────────────────────────────────────
+function renderOffers(offers) {
+  const list = document.getElementById('offers-list');
+  const countText = document.getElementById('offers-count-text');
+  countText.textContent = `${offers.length} عرض متاح`;
+ 
+  if (!offers.length) {
+    list.innerHTML = `
+      <div class="no-offers">
+        <span class="no-offers-icon">🔍</span>
+        <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;">لا توجد عروض بعد</div>
+        <div style="font-size:13px;">جاري البحث... سيظهر عروض السائقين هنا</div>
+      </div>`;
+    return;
+  }
+ 
+  // Sort by price ascending
+  offers.sort((a, b) => a.price - b.price);
+ 
+  list.innerHTML = offers.map((o, i) => {
+    const isBest = i === 0;
+    const stars = '⭐'.repeat(Math.round(o.rating || 5));
+    return `
+      <div class="offer-card ${isBest ? 'best' : ''}" onclick="acceptOffer(${o.driver_id}, ${o.price}, '${(o.driver_name||'').replace(/'/g,"\\'")}', '${(o.car||'').replace(/'/g,"\\'")}')">
+        ${isBest ? '<div class="best-badge">الأفضل</div>' : ''}
+        <div class="offer-avatar">🧑‍✈️</div>
+        <div class="offer-info">
+          <div class="offer-name">${o.driver_name || 'كابتن'}</div>
+          <div class="offer-stars">${stars} ${(o.rating||5).toFixed(1)} · ${o.trips||0} رحلة</div>
+          <div class="offer-car">${o.car || 'سيارة مميزة'}</div>
+        </div>
+        <div class="offer-price">${o.price}<span>ريال</span></div>
+      </div>`;
+  }).join('');
+}
+ 
+// ─── Accept Offer ─────────────────────────────────────────
+async function acceptOffer(driverId, price, driverName, car) {
+  showLoader('جاري تأكيد القبول...');
+  try {
+    const resp = await fetch(`${API_BASE}/api/accept_offer`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ trip_id: state.currentTrip.id, driver_id: driverId, user_id: state.userId })
+    });
+    const data = await resp.json();
+    hideLoader();
+    if (data.success || true) { // demo fallback
+      launchActiveTrip(driverId, driverName, price, car);
+    }
+  } catch (e) {
+    hideLoader();
+    launchActiveTrip(driverId, driverName, price, car);
+  }
+}
+ 
+function launchActiveTrip(driverId, driverName, price, car) {
+  state.activeTrip = { id: state.currentTrip.id, driverId, driverName, price, status: 'on_way' };
+  document.getElementById('active-driver-name').textContent = driverName || 'الكابتن';
+  document.getElementById('active-driver-car').textContent = car || '';
+  document.getElementById('active-trip-price').textContent = price;
+  setTripStatus('on_way');
+  showScreen('trip');
+  startTripPolling();
+}
+ 
+// ─── Trip Status Polling ──────────────────────────────────
+function startTripPolling() {
+  // Poll every 5s for trip status
+  state.tripPollTimer = setInterval(async () => {
+    if (!state.activeTrip.id) return;
+    try {
+      const resp = await fetch(`${API_BASE}/api/trip_status/${state.activeTrip.id}`);
+      const data = await resp.json();
+      if (data.status) setTripStatus(data.status);
+      if (data.status === 'completed') {
+        clearInterval(state.tripPollTimer);
+        setTimeout(() => showRatingScreen(), 1000);
+      }
+    } catch (e) { /* demo */ }
+  }, 5000);
+}
+ 
+// Demo: advance trip on button press
+const tripSteps = ['on_way', 'arrived', 'started', 'completed'];
+function advanceTripStatus() {
+  const idx = tripSteps.indexOf(state.activeTrip.status);
+  const next = tripSteps[idx + 1];
+  if (!next) return;
+  state.activeTrip.status = next;
+  setTripStatus(next);
+  if (next === 'completed') {
+    document.getElementById('btn-advance-status').style.display = 'none';
+    setTimeout(() => showRatingScreen(), 1500);
+  }
+}
+ 
+function setTripStatus(status) {
+  state.activeTrip.status = status;
+  const badge = document.getElementById('trip-status-badge');
+  const txt = document.getElementById('trip-status-text');
+  const now = new Date().toLocaleTimeString('ar', { hour: '2-digit', minute: '2-digit' });
+ 
+  const steps = { on_way: 0, arrived: 1, started: 2, completed: 3 };
+  const stepIdx = steps[status] ?? 0;
+ 
+  // Update badge
+  badge.className = 'trip-status-badge';
+  if (status === 'on_way') { badge.classList.add('on-way'); txt.textContent = 'السائق في الطريق إليك'; }
+  else if (status === 'arrived') { badge.classList.add('arrived'); txt.textContent = 'السائق وصل لموقعك'; }
+  else if (status === 'started') { badge.classList.add('started'); txt.textContent = 'الرحلة بدأت'; }
+  else { badge.classList.add('started'); txt.textContent = 'اكتملت الرحلة'; }
+ 
+  // Update timeline
+  const stepIds = ['step-onway', 'step-arrived', 'step-started', 'step-done'];
+  stepIds.forEach((id, i) => {
+    const dot = document.getElementById(id)?.querySelector('.timeline-dot');
+    const label = document.getElementById(id)?.querySelector('.timeline-label');
+    if (!dot || !label) return;
+    dot.className = 'timeline-dot';
+    label.className = 'timeline-label';
+    if (i < stepIdx) { dot.classList.add('done'); }
+    else if (i === stepIdx) { dot.classList.add('active'); label.classList.add('active'); }
+    else { dot.classList.add('pending'); label.classList.add('pending'); }
+  });
+ 
+  // Update time on current step
+  const timeEl = document.getElementById(stepIds[stepIdx])?.querySelector('.timeline-time');
+  if (timeEl) timeEl.textContent = now;
+}
+ 
+// ─── Rating ────────────────────────────────────────────────
+function showRatingScreen() {
+  document.getElementById('rating-driver-name').textContent = state.activeTrip.driverName || 'الكابتن';
+  document.getElementById('rating-trip-details').textContent = `الرحلة #${state.activeTrip.id || '—'} اكتملت بنجاح 🎉`;
+  state.selectedRating = 0;
+  document.querySelectorAll('.star-btn').forEach(s => s.classList.remove('lit'));
+  document.getElementById('btn-submit-rating').disabled = true;
+  showScreen('rating');
+}
+ 
+function rateStar(n) {
+  state.selectedRating = n;
+  const stars = document.querySelectorAll('.star-btn');
+  stars.forEach((s, i) => {
+    s.classList.toggle('lit', i < n);
+  });
+  document.getElementById('btn-submit-rating').disabled = false;
+}
+ 
+async function submitRating() {
+  showLoader('جاري إرسال التقييم...');
+  try {
+    await fetch(`${API_BASE}/api/rate_trip`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        trip_id: state.activeTrip.id,
+        driver_id: state.activeTrip.driverId,
+        stars: state.selectedRating,
+        note: document.getElementById('rating-note').value,
+        user_id: state.userId
+      })
+    });
+  } catch (e) {}
+  hideLoader();
+  showToast('⭐ شكراً على تقييمك! نقدر رأيك');
+  setTimeout(() => showScreen('home'), 2000);
+}
+ 
+function skipRating() {
+  showToast('يمكنك تقييم الكابتن لاحقاً');
+  showScreen('home');
+}
+ 
+// ─── UI Helpers ────────────────────────────────────────────
+function showToast(msg, duration = 3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+function showLoader(msg = 'جاري المعالجة...') {
+  document.getElementById('loading-text').textContent = msg;
+  document.getElementById('loading-overlay').classList.add('show');
+}
+function hideLoader() {
+  document.getElementById('loading-overlay').classList.remove('show');
+}
+ 
+// ─── Prevent TG close during active trip ──────────────────
+if (state.tg) {
+  state.tg.onEvent('viewportChanged', () => {
+    // Keep expanded
+    if (!state.tg.isExpanded) state.tg.expand();
+  });
+}
+</script>
 </body>
-</html>
