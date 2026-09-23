@@ -252,7 +252,7 @@ body{
   justify-content: center; transition: opacity 0.6s ease, visibility 0.6s ease;
   text-align: center; padding: 20px; animation: autoHideSplash 5s forwards;
 }
-.splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.splash-screen.hidden { display: none !important; opacity: 0; visibility: hidden; pointer-events: none; }
 @keyframes autoHideSplash { 0%,88%{opacity:1;visibility:visible;pointer-events:all} 100%{opacity:0;visibility:hidden;pointer-events:none} }
 .splash-img-container { width: 220px; height: 220px; margin-bottom: 30px; animation: floatSplash 3s ease-in-out infinite; }
 .splash-img { width: 100%; height: 100%; object-fit: contain; }
@@ -1088,6 +1088,7 @@ function hideSplash() {
   const splash = document.getElementById('nd-splash');
   if (splash) {
     splash.classList.add('hidden');
+    splash.style.display = 'none';
     clearTimeout(splashTimeout);
   }
 }
@@ -1149,6 +1150,30 @@ function goTo(id){
   });
   requestAnimationFrame(()=>document.getElementById('s-'+id).classList.add('active'));
   if(tg?.BackButton) id==='home'?tg.BackButton.hide():tg.BackButton.show();
+}
+ 
+function goToRequest(type){
+  ST.tripType=type;
+  if(type==='trip_daily'){
+    Object.assign(D,{step:1,from:'',to:'',dir:'',time:'',pax:1,bag:'',gen:''});
+    document.querySelectorAll('#s-daily .choice-btn').forEach(b=>b.classList.remove('sel'));
+    resetGPSBtn('gps-d-btn','📍 مشاركة موقعي الحالي (GPS) — إجباري');
+    wShow('daily',1);goTo('daily');
+  } else if(type==='trip_monthly'){
+    Object.assign(M,{step:1,home:'',work:'',pickup:'',wstart:'',wend:'',sched:'',days:5,pax:1,gen:'',nat:'',notes:''});
+    document.querySelectorAll('#s-monthly .choice-btn').forEach(b=>b.classList.remove('sel'));
+    document.getElementById('m-days').textContent='5';
+    document.getElementById('m-pax').textContent='1';
+    resetGPSBtn('gps-m-btn','📍 مشاركة موقع المنزل (GPS) — إجباري');
+    wShow('monthly',1);goTo('monthly');
+  } else {
+    goTo('request');
+  }
+}
+ 
+function resetGPSBtn(id,text){
+  const b=document.getElementById(id);
+  if(b){b.textContent=text;b.style.color='var(--gold)';b.style.borderColor='rgba(200,164,90,.35)';b.className='gps-btn'}
 }
  
 // ── GPS ─────────────────────────────────────────
@@ -1577,11 +1602,52 @@ function selectOption(el,id,value){el.parentElement.querySelectorAll('.option-bt
 function selectTripDirection(el,value){selectOption(el,'inp-dir',value);document.getElementById('urgent-time-fields').classList.add('active');document.getElementById('return-time-fields').classList.toggle('active',value==='ذهاب وعودة')}
 function selectLuggage(el,value){selectOption(el,'inp-luggage',value);document.getElementById('luggage-details').classList.toggle('active',value==='نعم')}
 function clearUnifiedForm(){
-  ['inp-from','inp-to','inp-content','inp-order-number','inp-pickup','inp-wstart','inp-wend','inp-days','inp-monthly-pax','inp-cash','inp-heavy-items','inp-price','inp-notes','inp-time','inp-return-time','inp-luggage-details'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''})
-  ['inp-dir','inp-gender','inp-sched','inp-nat','inp-monthly-gender','inp-paid','inp-parcel-gender','inp-parcel-nationality','inp-passenger-gender','inp-workers'].forEach(id=>setVal(id,''));setVal('inp-days','5');setVal('inp-monthly-pax','1');setVal('inp-pax','1');
-  ['urgent-time-fields','return-time-fields','luggage-details'].forEach(id=>document.getElementById(id)?.classList.remove('active'));
-  document.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('sel'));document.querySelector('#inp-car .option-btn')?.classList.add('sel');document.querySelector('#inp-heavy-type .option-btn')?.classList.add('sel');
-  uploadedImageUrl='';document.getElementById('upload-state').textContent='يمكنك إرفاق صورة للطرد أو الأغراض';document.getElementById('unified-image').value='';ST.lat=null;ST.lng=null;unifiedCar='سيارة صغيرة';unifiedHeavyType='دينة';resetGPSBtn('unified-gps-btn','📍 تحديد موقعي الحالي (GPS) — إجباري')
+  const clearIds = [
+    'inp-from','inp-to','inp-content','inp-order-number','inp-pickup',
+    'inp-wstart','inp-wend','inp-days','inp-monthly-pax','inp-cash',
+    'inp-heavy-items','inp-price','inp-notes','inp-time','inp-return-time',
+    'inp-luggage-details','inp-pax'
+  ];
+  clearIds.forEach(function(fieldId){
+    const field = document.getElementById(fieldId);
+    if (field) field.value = '';
+  });
+  const hiddenIds = [
+    'inp-dir','inp-gender','inp-sched','inp-nat','inp-monthly-gender',
+    'inp-paid','inp-parcel-gender','inp-parcel-nationality',
+    'inp-passenger-gender','inp-workers','inp-luggage'
+  ];
+  hiddenIds.forEach(function(fieldId){
+    const field = document.getElementById(fieldId);
+    if (field) field.value = '';
+  });
+  const days = document.getElementById('inp-days');
+  const monthlyPassengers = document.getElementById('inp-monthly-pax');
+  const passengers = document.getElementById('inp-pax');
+  if (days) days.value = '5';
+  if (monthlyPassengers) monthlyPassengers.value = '1';
+  if (passengers) passengers.value = '1';
+  ['urgent-time-fields','return-time-fields','luggage-details'].forEach(function(sectionId){
+    const section = document.getElementById(sectionId);
+    if (section) section.classList.remove('active');
+  });
+  document.querySelectorAll('.option-btn').forEach(function(button){
+    button.classList.remove('sel');
+  });
+  const defaultCar = document.querySelector('#inp-car .option-btn');
+  const defaultHeavy = document.querySelector('#inp-heavy-type .option-btn');
+  if (defaultCar) defaultCar.classList.add('sel');
+  if (defaultHeavy) defaultHeavy.classList.add('sel');
+  uploadedImageUrl = '';
+  const uploadState = document.getElementById('upload-state');
+  const imageInput = document.getElementById('unified-image');
+  if (uploadState) uploadState.textContent = 'يمكنك إرفاق صورة للطرد أو الأغراض';
+  if (imageInput) imageInput.value = '';
+  ST.lat = null;
+  ST.lng = null;
+  unifiedCar = 'سيارة صغيرة';
+  unifiedHeavyType = 'دينة';
+  resetGPSBtn('unified-gps-btn','📍 تحديد موقعي الحالي (GPS) — إجباري');
 }
 function openForm(type,title){unifiedType=type;ST.tripType=type;clearUnifiedForm();document.getElementById('unified-title').textContent=title||UNIFIED_TITLES[type]||'طلب جديد';document.querySelectorAll('#unified-panel .form-section').forEach(s=>s.classList.remove('active'));let ids=type==='trip_urgent'?['sec-urgent']:['trip_daily','trip_monthly'].includes(type)?['sec-monthly']:type==='trip_heavy'?['sec-heavy-before','sec-heavy-after','sec-image']:['sec-parcel-before','sec-parcel-after','sec-image'];ids.forEach(id=>document.getElementById(id)?.classList.add('active'));if(['trip_daily','trip_monthly'].includes(type))setVal('inp-schedule-type',type==='trip_daily'?'رحلة يومية':'التزام شهري');document.querySelector('#s-request > .topbar').style.display='none';document.querySelector('#s-request > .scroll').style.display='none';document.querySelector('#s-request > .bottom').style.display='none';document.getElementById('unified-panel').classList.add('visible');goTo('request')}
 function getGPS(){if(!navigator.geolocation){unifiedAlert('⚠️ جهازك لا يدعم GPS');return}const btn=document.getElementById('unified-gps-btn');btn.textContent='⏳ جاري تحديد موقعك...';btn.disabled=true;navigator.geolocation.getCurrentPosition(p=>{ST.lat=p.coords.latitude;ST.lng=p.coords.longitude;btn.disabled=false;btn.textContent='✅ تم تحديد الموقع بنجاح — اكتب اسم الحي';btn.className='gps-btn done';toast('✅ تم تحديد موقعك بنجاح')},()=>{btn.disabled=false;btn.textContent='📍 تحديد موقعي الحالي (GPS) — إجباري';unifiedAlert('⚠️ تعذر GPS — تأكد من تفعيل الموقع في جهازك')},{timeout:10000,enableHighAccuracy:true})}
@@ -1674,4 +1740,3 @@ tg?.BackButton?.onClick?.(()=>{
 </script>
 </body>
 </html>
-
