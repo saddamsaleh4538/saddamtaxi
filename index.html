@@ -1151,25 +1151,6 @@ function goTo(id){
   if(tg?.BackButton) id==='home'?tg.BackButton.hide():tg.BackButton.show();
 }
  
-function goToRequest(type){
-  ST.tripType=type;
-  if(type==='trip_daily'){
-    Object.assign(D,{step:1,from:'',to:'',dir:'',time:'',pax:1,bag:'',gen:''});
-    document.querySelectorAll('#s-daily .choice-btn').forEach(b=>b.classList.remove('sel'));
-    resetGPSBtn('gps-d-btn','📍 مشاركة موقعي الحالي (GPS) — إجباري');
-    wShow('daily',1);goTo('daily');
-  } else if(type==='trip_monthly'){
-    Object.assign(M,{step:1,home:'',work:'',pickup:'',wstart:'',wend:'',sched:'',days:5,pax:1,gen:'',nat:'',notes:''});
-    document.querySelectorAll('#s-monthly .choice-btn').forEach(b=>b.classList.remove('sel'));
-    document.getElementById('m-days').textContent='5';
-    document.getElementById('m-pax').textContent='1';
-    resetGPSBtn('gps-m-btn','📍 مشاركة موقع المنزل (GPS) — إجباري');
-    wShow('monthly',1);goTo('monthly');
-  } else {
-    goTo('request');
-  }
-}
- 
 function resetGPSBtn(id,text){
   const b=document.getElementById(id);
   if(b){b.textContent=text;b.style.color='var(--gold)';b.style.borderColor='rgba(200,164,90,.35)';b.className='gps-btn'}
