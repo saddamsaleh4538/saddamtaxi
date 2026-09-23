@@ -1151,11 +1151,6 @@ function goTo(id){
   if(tg?.BackButton) id==='home'?tg.BackButton.hide():tg.BackButton.show();
 }
  
-function resetGPSBtn(id,text){
-  const b=document.getElementById(id);
-  if(b){b.textContent=text;b.style.color='var(--gold)';b.style.borderColor='rgba(200,164,90,.35)';b.className='gps-btn'}
-}
- 
 // ── GPS ─────────────────────────────────────────
 function getGPSFor(inputId, type){
   if(!navigator.geolocation){
@@ -1679,3 +1674,4 @@ tg?.BackButton?.onClick?.(()=>{
 </script>
 </body>
 </html>
+
